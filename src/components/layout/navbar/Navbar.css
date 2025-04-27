@@ -14,7 +14,7 @@
 .navbar-nav {
 	display: flex;
 	list-style: none;
-	padding-left: 15%;
+	/* padding-left: 15%; */
 	margin: 0;
 }
 
@@ -31,6 +31,12 @@
 	text-decoration: none;
 	padding: 5px;
 }
+
+.nav-link i {
+	margin-left: 5px;
+	font-size: 0.75rem;
+	vertical-align: middle;
+  }
 
 
 .nav-item .dropdown-menu {
@@ -49,7 +55,7 @@
 }
 
 .dropdown-menu li {
-	padding: 10px;
+	/* padding: 10px; */
 	list-style: none;
 }
 
@@ -68,7 +74,7 @@
 .login-btn {
 	background-color: #ff4d4f;
 	color: white;
-	font-weight: bold;
+	/* font-weight: bold; */
 	padding: 10px 15px;
 	border-radius: 5px;
 	text-decoration: none;
@@ -104,6 +110,7 @@
 .navbar {
 	display: flex;
 	/* font-family: "Flaticon"; */
+	font-family: Inter, sans-serif;
     justify-content: space-around;
     position: fixed;
     height: 60px;

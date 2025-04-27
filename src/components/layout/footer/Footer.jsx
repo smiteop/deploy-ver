@@ -93,7 +93,7 @@ export default function Footer() {
             </Typography>
             <List dense>
               {[ 
-                { icon: <LocationOn sx={{ color: "gray" }} />, text: "2Bridge Lane, Opp. Credence Hospital, Ulloor, Trivandrum" },
+                { icon: <LocationOn sx={{ color: "gray" }} />, text: "Bridge Lane, Opp. Credence Hospital, Ulloor, Trivandrum" },
                 { icon: <Phone sx={{ color: "gray" }} />, text: "(+91) 8592939355" },
                 { icon: <Email sx={{ color: "gray" }} />, text: "Info@1to1hometutors.com" },
               ].map((item, index) => (

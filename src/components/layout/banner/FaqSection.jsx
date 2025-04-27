@@ -1,26 +1,25 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-  Container,
-  Tabs,
-  Tab,
+  Box,
+  Typography,
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Typography,
-  Box,
-  Paper,
+  ButtonBase,
+  Container,
+  Button,
 } from "@mui/material";
-import {
-  Flag,
-  AttachMoney,
-  ShoppingBag,
-  MenuBook,
-  HelpOutline,
-  ExpandMore,
-} from "@mui/icons-material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Flag, AttachMoney, ShoppingBag } from "@mui/icons-material";
 
-const faqData = {
-  parents: [
+const tabData = [
+  { label: "Parents", icon: <Flag />, value: "Parents" },
+  { label: "Getting Started", icon: <AttachMoney />, value: "Getting Started" },
+  { label: "Tutor", icon: <ShoppingBag />, value: "Tutor" },
+];
+
+const faqsData = {
+  Parents: [
     {
       question: "What is 1-to-1 Home Tutors?",
       answer:
@@ -67,7 +66,7 @@ const faqData = {
         "Yes, you can discontinue by informing us in advance as per our cancellation policy.",
     },
   ],
-  "getting-started": [
+  "Getting Started": [
     {
       question: "How do I enrol my child?",
       answer:
@@ -98,8 +97,13 @@ const faqData = {
       answer:
         "If your child is not comfortable with the assigned tutor, we can provide a replacement after assessing the concerns.",
     },
+    {
+      question: "How do I track my child's progress?",
+      answer:
+        "We provide regular progress reports, feedback sessions, and assessments to keep you updated on your child’s learning journey.",
+    },
   ],
-  tutor: [
+  Tutor: [
     {
       question: "How do I apply to become a tutor?",
       answer:
@@ -135,218 +139,82 @@ const faqData = {
       answer:
         "Absolutely! Tutors can choose to take online-only assignments as per their convenience and teaching setup.",
     },
-    {
-      question: "How is the payment handled?",
-      answer:
-        "Tutor payments are processed monthly. You will receive 70% of the tuition fee collected from students. A wallet and payment tracking system is integrated into our tutor app.",
-    },
-    {
-      question: "Will I get regular classes?",
-      answer:
-        "We receive regular student inquiries. Your chances increase based on subject demand, flexible timings, and performance reviews.",
-    },
-    {
-      question: "How do I track my classes and schedule?",
-      answer:
-        "All class schedules, student info, and attendance are managed through our app. Tutors must check in/out of classes via the app.",
-    },
-    {
-      question: "What if I face issues with a student or class?",
-      answer:
-        "You can raise any concerns or requests through the grievance section in the app or directly contact the coordinator assigned to you.",
-    },
-    {
-      question: "Is there an agreement or contract?",
-      answer:
-        "Yes, tutors are required to sign a basic agreement after selection which outlines roles, responsibilities, and code of conduct.",
-    },
-    {
-      question: "Will I receive an experience certificate?",
-      answer:
-        "Yes, all tutors who complete a minimum period of active tutoring with us will be eligible for an official experience certificate.",
-    },
   ],
 };
 
-const categoryIcons = {
-  "getting-started": <Flag fontSize="small" />,
-  pricing: <AttachMoney fontSize="small" />,
-  sales: <ShoppingBag fontSize="small" />,
-  usage: <MenuBook fontSize="small" />,
-  general: <HelpOutline fontSize="small" />,
-};
-
-const categoryLabels = {
-  parents: "Parents",
-  "getting-started": "Getting Started",
-  tutor: "Tutor",
-};
-
-export default function FaqSection() {
-  const INITIAL_VISIBLE_COUNT = 6;
-  const [activeCategory, setActiveCategory] = useState("getting-started");
-  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
+export default function FAQSection() {
+  const [activeCategory, setActiveCategory] = useState("Parents");
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const [showAll, setShowAll] = useState(false); // Track if all questions are visible
 
-  useEffect(() => {
-    setVisibleCount(INITIAL_VISIBLE_COUNT);
-    setExpandedIndex(null);
-  }, [activeCategory]);
+  const handleAccordionChange = (index) => {
+    setExpandedIndex((prevIndex) => (prevIndex === index ? null : index));
+  };
+
+  const handleShowMoreToggle = () => {
+    setShowAll((prev) => !prev);
+  };
 
   return (
-    <Container maxWidth="md" sx={{ py: 6 }}>
-      <Typography variant="h4" fontWeight={700} textAlign="center" mb={5}>
-        Frequently Asked Questions
-      </Typography>
-
-      <Paper
-        elevation={0}
-        sx={{
-          mb: 4,
-          borderRadius: 3,
-          p: 1,
-          backgroundColor: "#f5f7fa",
-          boxShadow: "none !important",
-        }}
-      >
-        <Tabs
-          value={activeCategory}
-          onChange={(_, newValue) => setActiveCategory(newValue)}
-          variant="scrollable"
-          scrollButtons="auto"
-          textColor="primary"
-          indicatorColor="primary"
-          sx={{
-            boxShadow: "none !important",
-            minHeight: "48px",
-            ".MuiTabs-indicator": {
-              display: "none",
-            },
-            ".MuiTab-root": {
-              fontWeight: 500,
-              minHeight: "48px",
-              textTransform: "none",
-              px: 1, // reduce padding here
+    <Container maxWidth="md" sx={{ py: 5 }}>
+      {/* Tab Buttons */}
+      <Box display="flex" gap={2} mb={4} justifyContent="center" flexWrap="wrap">
+        {tabData.map((tab) => (
+          <ButtonBase
+            key={tab.value}
+            onClick={() => setActiveCategory(tab.value)}
+            sx={{
+              flexDirection: "column",
+              py: 2,
+              px: 3,
               borderRadius: 2,
-              backgroundColor: "transparent",
-              transition: "none",
-              "&.Mui-selected": {
-                backgroundColor: "transparent",
-                boxShadow: "none",
-                outline: "1px",
-              },
-              "&:focus": {
-                outline: "1px",
-                boxShadow: "none",
-              },
-            },
-          }}
-        >
-          {Object.keys(faqData).map((category) => (
-            <Tab
-              key={category}
-              value={category}
-              disableRipple
-              label={
-                <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, pl: 0.5, pr: 0.5 }}>
-                  {categoryIcons[category]} {categoryLabels[category]}
-                </Box>
-              }
-            />
-          ))}
-        </Tabs>
-      </Paper>
+              boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+              backgroundColor: activeCategory === tab.value ? "#ff4d4f" : "#fff",
+              color: activeCategory === tab.value ? "#fff" : "#000",
+            }}
+          >
+            {tab.icon}
+            <Typography variant="subtitle2" fontWeight={500} mt={1}>
+              {tab.label}
+            </Typography>
+          </ButtonBase>
+        ))}
+      </Box>
 
+      {/* Accordion Section */}
       <Box>
-        {faqData[activeCategory].slice(0, visibleCount).map((faq, index) => {
-          const isExpanded = expandedIndex === index;
-          return (
+        {faqsData[activeCategory]
+          .slice(0, showAll ? faqsData[activeCategory].length : 6)
+          .map((faq, index) => (
             <Accordion
               key={index}
-              expanded={isExpanded}
-              onChange={() => setExpandedIndex(isExpanded ? null : index)}
-              disableGutters
-              square
+              expanded={expandedIndex === index}
+              onChange={() => handleAccordionChange(index)}
               sx={{
+                borderRadius: 2,
+                boxShadow: "0px 3px 10px rgba(0,0,0,0.05)",
                 mb: 2,
-                border: "none !important",
-                borderRadius: "0px !important",
-                boxShadow: "none !important",
-                backgroundColor: "#ffffff",
                 "&::before": {
-                  display: "none !important",
-                },
-                "&.Mui-expanded": {
-                  margin: 0,
-                  boxShadow: "none !important",
+                  display: "none",
                 },
               }}
             >
-              <AccordionSummary
-                expandIcon={<ExpandMore />}
-                sx={{
-                  px: 2,
-                  py: 1.5,
-                  backgroundColor: "#fff !important",
-                  "&.Mui-expanded": {
-                    minHeight: "auto",
-                    backgroundColor: "#fff !important",
-                  },
-                  "& .MuiAccordionSummary-content": {
-                    margin: 0,
-                  },
-                }}
-              >
-                <Typography fontWeight={600}>{faq.question}</Typography>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ px: 3, py: 2 }}>
+                <Typography fontWeight={600} fontSize="1rem">
+                  {faq.question}
+                </Typography>
               </AccordionSummary>
-              <AccordionDetails
-                sx={{
-                  px: 2,
-                  pb: 2,
-                  border: "none !important",
-                  boxShadow: "none !important",
-                }}
-              >
-                <Typography color="text.secondary">{faq.answer}</Typography>
+              <AccordionDetails sx={{ px: 3, pb: 2 }}>
+                <Typography color="text.secondary" fontSize="0.95rem">
+                  {faq.answer}
+                </Typography>
               </AccordionDetails>
             </Accordion>
-          );
-        })}
-
-        {visibleCount < faqData[activeCategory].length && (
-          <Box textAlign="center" mt={2}>
-            <Typography
-              variant="body2"
-              component="button"
-              onClick={() =>
-                setVisibleCount((prev) =>
-                  Math.min(prev + 6, faqData[activeCategory].length)
-                )
-              }
-              sx={{
-                color: "primary.main",
-                cursor: "pointer",
-                border: "none",
-                background: "none",
-                fontWeight: 500,
-                padding: "12px 24px",
-                borderRadius: "8px",
-                boxShadow: "none",
-                outline: "none",
-                "&:hover": {
-                  background: "rgba(0, 0, 0, 0.04)",
-                  boxShadow: "none",
-                },
-                "&:focus": {
-                  outline: "none",
-                  boxShadow: "none",
-                },
-              }}
-            >
-              Show More
-            </Typography>
-          </Box>
-        )}
+          ))}
+        {/* Show More / Show Less Button */}
+        <Button onClick={handleShowMoreToggle} sx={{ mt: 2, textTransform: "none" }}>
+          {showAll ? "Show Less" : "Show More"}
+        </Button>
       </Box>
     </Container>
   );

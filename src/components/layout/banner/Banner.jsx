@@ -46,30 +46,28 @@ export default function HeroBanner() {
 
           {/* Right Column - Course Cards */}
           <Grid item xs={12} lg={6}>
-            <Grid container spacing={3}>
-              {/* Course Card 1 */}
-              <Grid item xs={12} sm={6}>
-                <CourseCard
-                  image={bannercard}
-                  title="Online Personal Tutor"
-                  subtitle="Expert-led personalized sessions to help students excel in their academics"
-                  price="$199"
-                />
-              </Grid>
+  <Grid container spacing={3}>
+    {/* Course Card 1 - Lower position */}
+    <Grid item xs={12} sm={6} sx={{ mt: 6 }}>
+      <CourseCard
+        image={bannercard}
+        title="Online Personal Tutor"
+        subtitle="Expert-led personalized sessions to help students excel in their academics"
+        price="$199"
+      />
+    </Grid>
 
-              {/* Course Card 2 - Added margin-top */}
-              <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
-                {" "}
-                {/* Adjust `mt` value as needed */}
-                <CourseCard
-                  image={bannercard2}
-                  title="Personal Home Tutor"
-                  subtitle="A smart, qualified tutor visits your home to improve learning skills and foster self-learning."
-                  price="$199"
-                />
-              </Grid>
-            </Grid>
-          </Grid>
+    {/* Course Card 2 - Slightly above */}
+    <Grid item xs={12} sm={6} sx={{ mt: 0 }}>
+      <CourseCard
+        image={bannercard2}
+        title="Personal Home Tutor"
+        subtitle="A smart, qualified tutor visits your home to improve learning skills and foster self-learning."
+        price="$199"
+      />
+    </Grid>
+  </Grid>
+</Grid>
         </Grid>
       </Box>
     </Box>
@@ -79,21 +77,26 @@ export default function HeroBanner() {
 // Course Card Component
 function CourseCard({ image, title, subtitle, price }) {
   return (
-    <Card sx={{ maxWidth: 400, height: 350, marginBlock: 15 }}>
+    <Card
+      sx={{
+        maxWidth: 400,
+        height: 400,
+        marginBlock: 13,
+        transition: "transform 0.3s ease, box-shadow 0.3s ease",
+        "&:hover": {
+          transform: "scale(1.03)",
+          boxShadow: 6,
+        },
+      }}
+    >
       <Box sx={{ position: "relative" }}>
-        <img src={image} alt={title} width={350} height={200} style={{ width: "100%" }} />
-        {/* <Button
-          sx={{
-            position: "absolute",
-            top: 8,
-            right: 8,
-            bgcolor: "rgba(255, 255, 255, 0.8)",
-          }}
-          variant="contained"
-          size="small"
-        >
-          <Favorite color="error" />
-        </Button> */}
+        <img
+          src={image}
+          alt={title}
+          width={350}
+          height={200}
+          style={{ width: "100%", borderTopLeftRadius: "4px", borderTopRightRadius: "4px" }}
+        />
         <Box
           sx={{
             position: "absolute",

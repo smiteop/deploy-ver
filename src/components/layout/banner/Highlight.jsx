@@ -20,7 +20,6 @@ const features = [
   { icon: <Computer />, title: "Safe & Verified Tutors", subtitle: "Background-verified tutors with agreements and identity verification." },
   { icon: <Person />, title: "Real-Time Progress Tracking", subtitle: "Regular feedback, assessments, and updates for parents."},
   { icon: <AccessTime />, title: "Flexible Scheduling", subtitle: "Convenient class timings as per students’ and parents’ availability." },
-  { icon: <Computer />, title: "Virtual Classroom", subtitle: "Seamless Experience" },
 ];
 
 export default function Highlight() {
